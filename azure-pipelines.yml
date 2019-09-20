@@ -42,8 +42,20 @@ steps:
     arguments: '--no-restore --configuration $(buildConfiguration)'
     projects: '**/*.csproj'
 
-
-
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'RohCloudSonarConnection'
+    organization: 'ptlearningruben'
+    scannerMode: 'MSBuild'
+    projectKey: 'mslearningrohsonarcloud'
+    projectName: 'ptlearningruben'
+    extraProperties: |
+      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/TestResults/Coverage/coverage.opencover.xml
+           sonar.exclusions=**/wwwroot/lib/**/*
+- task: SonarCloudAnalyze@1
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 
 - task: DotNetCoreCLI@2
   displayName: 'Install ReportGenerator'
