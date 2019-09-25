@@ -1,10 +1,5 @@
 pool:
-<<<<<<< HEAD
-  name: 'MyAgentPool'
-  demands:
-    - npm
-=======
-  vmImage: 'Ubuntu-16.04'
+  vmImage: 'MyAgentPool'
   demands:
     - npm
 
@@ -59,4 +54,3 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   condition: succeeded()
->>>>>>> 38dafd2cd8e55058196a24ada60806618b530cc4
