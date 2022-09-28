@@ -1,5 +1,5 @@
 pool:
-  vmImage: 'MyAgentPool'
+  vmImage: 'az-400-pool'
   demands:
     - npm
 
