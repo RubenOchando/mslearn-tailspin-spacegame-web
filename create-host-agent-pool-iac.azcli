@@ -21,7 +21,7 @@ IPADDRESS=$(az vm show \
 
   sudo apt-get update
 
-  #curl https://raw.githubusercontent.com/MicrosoftDocs/mslearn-azure-pipelines-build-agent/main/build-tools.sh > build-tools.sh
+  #curl https://raw.githubusercontent.com/MicrosoftDocs/mslearn-azure-pipelines-build-agent/main/build-tools.sh > build-tools.sh --esunig this
     curl https://raw.githubusercontent.com/RubenOchando/mslearn-tailspin-spacegame-web/build-agent/build-tools.sh > build-tools.sh
 
   cat build-tools.sh
