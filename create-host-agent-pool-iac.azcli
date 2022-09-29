@@ -1,0 +1,43 @@
+RG= 'resourcegroup'
+
+pat=3seh5kz7nrskmczc5vy5adbskg5wyef5takb6ngugswfjklx5f4a
+az vm create \
+    --name MyLinuxAgent \
+    --resource-group  \
+    --image canonical:0001-com-ubuntu-server-focal:20_04-lts:latest \
+    --size Standard_DS2_v2 \
+    --admin-username azureuser \
+    --generate-ssh-keys
+
+
+IPADDRESS=$(az vm show \
+  --name MyLinuxAgent \
+  --resource-group learn-fb9bcf0e-da76-43c0-a6be-48a6e487a699 \
+  --show-details \
+  --query [publicIps] \
+  --output tsv)
+  echo $IPADDRESS 
+  ssh azureuser@$IPADDRESS
+
+  sudo apt-get update
+
+  #curl https://raw.githubusercontent.com/MicrosoftDocs/mslearn-azure-pipelines-build-agent/main/build-tools.sh > build-tools.sh 
+    curl https://raw.githubusercontent.com/RubenOchando/mslearn-tailspin-spacegame-web/build-agent/build-tools.sh > build-tools.sh
+
+  cat build-tools.sh
+  chmod u+x build-tools.sh
+  sudo ./build-tools.sh
+
+  #instal agent software
+  
+  curl https://raw.githubusercontent.com/MicrosoftDocs/mslearn-azure-pipelines-build-agent/main/build-agent.sh > build-agent.sh 
+  #curl https://raw.githubusercontent.com/RubenOchando/mslearn-tailspin-spacegame-web/build-agent/build-agent.sh > build-agent.sh
+  cat build-agent.sh
+  export AZP_AGENT_NAME=MyLinuxAgent
+  export AZP_URL=https://dev.azure.com/ptrohWEorg
+  export AZP_TOKEN=3seh5kz7nrskmczc5vy5adbskg5wyef5takb6ngugswfjklx5f4a
+  export AZP_POOL=MyAgentPool
+  export AZP_AGENT_VERSION=$(curl -s https://api.github.com/repos/microsoft/azure-pipelines-agent/releases | jq -r '.[0].tag_name' | cut -d "v" -f 2)
+  echo $AZP_AGENT_VERSION
+  chmod u+x build-agent.sh
+  sudo -E ./build-agent.sh
